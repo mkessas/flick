@@ -1,0 +1,71 @@
+<!--
+
+  MFA Admin Portal (http://gitlab.telecom.tcnz.net/mourad.kessas/taas-mfa.git)
+  Author: Mourad Kessas <mourad.kessas@spark.co.nz>
+  Copyright (c) 2016 Spark New Zealand Limited
+
+-->
+<!DOCTYPE html>
+<html lang="en" ng-app="mfa">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="icon" href="../../favicon.ico"> -->
+
+    <title>MFA Portal</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/mfa.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body ng-controller="mfaCtrl">
+
+    <div ng-include="body"></div>
+
+    <div id="loading" class="modal" style="display: block">
+        <div class="modal-dialog" style="width: 350px; margin-top: 300px">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="progress" style="margin-bottom: 0">
+                      <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%">Loading, please wait..</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link href="css/bootstrap-slider.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-resource.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/ng-infinite-scroll.min.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.14.1.min.js"></script>
+    <script src="js/mfa.js"></script>
+    <script src="js/user.js"></script>
+    <script src="admin/js/mfa.js"></script>
+    <script src="admin/js/user.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-slider.js"></script>
+    <script src="js/qrcode.min.js"></script>
+    <script src="js/slider.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+    <script>
+    $(function(){ $("#loading").delay(1200).fadeToggle(300); });
+    </script>
+  </body>
+</html>

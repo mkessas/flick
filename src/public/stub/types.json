@@ -1,0 +1,12 @@
+[ 
+    {
+        "name": "Hard",
+        "type": "hard"
+    },{
+        "name": "Soft",
+        "type": "soft"
+    },{
+        "name": "Both",
+        "type": "both"
+    }
+]
