@@ -7,6 +7,7 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var properties = require('properties');
 var api = require('../routes/api');
+var Flick = require('../modules/flick');
 
 
 console.log("Flick v%%VERSION%% Starting...");
@@ -21,15 +22,17 @@ properties.parse(CONF, { path: true, sections: true, namespaces: true }, (e, c) 
 
     conf = c;
 
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
     if (conf.general.pidfile) fs.writeFileSync(conf.general.pidfile, process.pid);
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
-    app.use( (req, res, next) => {
-    });
 
     app.use('/api', api);
     app.use(express.static(path.join(__dirname, '..', conf.static.directory)));
+
+    var flick = new Flick(conf);
 
     app.use((req, res, next) => {
         var err = new Error('File Not Found');
@@ -40,7 +43,7 @@ properties.parse(CONF, { path: true, sections: true, namespaces: true }, (e, c) 
     app.use( (err, req, res, next) => {
         res.status(err.status || 500);
         res.send('<html><head><title>'+err.status+' Error</title></head><body><h3>'+err.status+' Error</h3><p>'+err.message+'</p></body></html>');
-        console.log(err.message);
+        if (err.status >= 500) console.log(err.message);
     });
 
     var port = conf.general.port ? conf.general.port :  '3000';
@@ -70,4 +73,4 @@ properties.parse(CONF, { path: true, sections: true, namespaces: true }, (e, c) 
     console.log("Startup complete (pid="+process.pid+")");
 });
 
-process.on('uncaughtException', (err) => { });
+//process.on('uncaughtException', (err) => { });
