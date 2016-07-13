@@ -1,0 +1,77 @@
+#!/usr/bin/env ../sbin/node
+
+var http = require('http');
+var express = require('express');
+var path = require('path');
+var fs = require('fs');
+var bodyParser = require('body-parser');
+var properties = require('properties');
+var api = require('../routes/api');
+var flick = require('../modules/flick');
+
+
+console.log("Flick v%%VERSION%% Starting...");
+
+const CONF = "../etc/flick.properties";
+var conf;
+
+properties.parse(CONF, { path: true, sections: true, namespaces: true }, (e, c) => {
+
+    var app = express(this);
+    var server;
+
+    conf = c;
+
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+    if (conf.general.pidfile) fs.writeFileSync(conf.general.pidfile, process.pid);
+
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+
+    app.use('/api', api);
+    app.use(express.static(path.join(__dirname, '..', conf.static.directory)));
+
+    flick.init(conf);
+    flick.updatePrice(true);
+
+    app.use((req, res, next) => {
+        var err = new Error('File Not Found');
+        err.status = 404;
+        next(err);
+    });
+
+    app.use( (err, req, res, next) => {
+        res.status(err.status || 500);
+        res.send('<html><head><title>'+err.status+' Error</title></head><body><h3>'+err.status+' Error</h3><p>'+err.message+'</p></body></html>');
+        if (err.status >= 500) console.log(err.message);
+    });
+
+    var port = conf.general.port ? conf.general.port :  '3000';
+    app.set('port', port);
+
+    server = http.createServer(app);
+    server.listen(port);
+    server.on('error', (error) => {
+      if (error.syscall !== 'listen') {
+        throw error;
+      }
+
+      switch (error.code) {
+        case 'EACCES':
+          console.error('Port requires elevated privileges');
+          process.exit(1);
+          break;
+        case 'EADDRINUSE':
+          console.error('Port already is already in use');
+          process.exit(1);
+          break;
+        default:
+          throw error;
+      }
+    });
+
+    console.log("Startup complete (pid="+process.pid+")");
+});
+
+process.on('uncaughtException', (err) => { console.log("Error:", err.message); });
