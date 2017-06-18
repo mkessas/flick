@@ -57,7 +57,7 @@ $ cd bin && nohup ./flick >> ../flick.log 2>&1 &
 
 The two endpoints currently defined are `/api/price` and `/api/update`
 
-### Retrieve price
+### Retrieve Price
 
 From a web browser, or a command line tool, you can issue a `GET` against `/api/price`
 
@@ -104,3 +104,10 @@ $ curl -sq http://localhost:3000/api/update | python -m json.tool
 ## Troubleshooting
 
 Enable debugging in the `etc/flick.properties` file under the `[general]` section (set `debug` to `true`)
+
+
+## Sample Use-Case
+
+Here is a light-weight Angular application that leverages this API to display prices in a browser.
+
+![Angular App Screenshot](https://github.com/mkessas/node-flick/raw/master/flick.png)
