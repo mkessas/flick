@@ -30,7 +30,6 @@ properties.parse(CONF, { path: true, sections: true, namespaces: true }, (e, c) 
     app.use(bodyParser.urlencoded({ extended: false }));
 
     app.use('/api', api);
-    app.use(express.static(path.join(__dirname, '..', conf.static.directory)));
 
     flick.init(conf);
     flick.updatePrice(true);

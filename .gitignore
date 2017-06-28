@@ -1,2 +1,4 @@
 flick.pid
+etc/flick.properties
 logs/
+.*.swp
