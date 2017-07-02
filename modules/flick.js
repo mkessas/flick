@@ -87,7 +87,7 @@ flick.updatePrice = (loopback) => {
             updated: new Date() 
         };
 
-        forecast = ret.prices.splice(1);
+        forecast = ret.prices.splice(1).map(entry => { entry.price.value *= tax; return entry });
 
         if (!max || price.price > max.price) max = price;
         if (!min || price.price < min.price) min = price;
