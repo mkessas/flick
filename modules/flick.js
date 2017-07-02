@@ -96,7 +96,7 @@ flick.updatePrice = (loopback) => {
 
     });
 
-    if (loopback) setTimeout(() => flick.updatePrice(true), conf.flick.refresh * 1000);
+    setTimeout(() => flick.updatePrice(true), conf.flick.refresh * 1000);
 }
 
 flick.updateToken = (callback) => {
