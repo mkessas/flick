@@ -1,1 +1,35 @@
-{}
+{
+  "name": "flick",
+  "description": "## Overview",
+  "version": "1.0.1",
+  "main": "bin/flick.js",
+  "dependencies": {
+    "cookie-session": "^2.0.0-alpha.1",
+    "express": "^4.15.3",
+    "mongodb": "^2.1.18",
+    "properties": "^1.2.1",
+    "request": "^2.72.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkessas/node-flick.git"
+  },
+  "keywords": [
+    "Flick",
+    "Electric",
+    "Spot",
+    "Price",
+    "REST",
+    "API"
+  ],
+  "author": "M. Kessas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mkessas/node-flick/issues"
+  },
+  "homepage": "https://github.com/mkessas/node-flick#readme"
+}

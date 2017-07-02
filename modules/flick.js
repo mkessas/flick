@@ -5,7 +5,7 @@ const flick = module.exports;
 var conf;
 var token;
 var price;
-var max, min;
+var max, min, forecast;
 
 flick.init = (c) => {
 
@@ -28,7 +28,7 @@ flick.init = (c) => {
 
 }
 
-flick.getPrice = () => { return { price, min, max }; }
+flick.getPrice = () => { return { price, min, max, forecast }; }
 
 flick.updatePrice = (loopback) => {
     if (!token) {
@@ -54,7 +54,7 @@ flick.updatePrice = (loopback) => {
             if (response.headers['content-type'].indexOf('json') > -1) {
                 ret = JSON.parse(body);
 
-                if (conf.general.debug) { console.info("updatePrice(): Setting Price to", ret.needle.price); }
+                if (conf.general.debug) { console.info("updatePrice(): Setting Price to", ret.prices[0].price.value); }
 
             }
         } catch (e) {
@@ -81,11 +81,13 @@ flick.updatePrice = (loopback) => {
         if (conf.general.debug) { console.info("Tax is: ", tax); }
 
         price = { 
-            price: Math.round(ret.needle.price*Math.pow(10,2))/Math.pow(10,2),
-            total: Math.round(ret.needle.price * tax * Math.pow(10,2))/Math.pow(10,2), 
-            components: ret.needle.components,
+            price: Math.round(ret.prices[0].price.value*Math.pow(10,2))/Math.pow(10,2),
+            total: Math.round(ret.prices[0].price.value* tax * Math.pow(10,2))/Math.pow(10,2), 
+            components: ret.prices[0].components,
             updated: new Date() 
         };
+
+        forecast = ret.prices.splice(1);
 
         if (!max || price.price > max.price) max = price;
         if (!min || price.price < min.price) min = price;

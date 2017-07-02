@@ -1,4 +1,5 @@
 flick.pid
 etc/flick.properties
-logs/
+sbin/*
+logs/*
 .*.swp
